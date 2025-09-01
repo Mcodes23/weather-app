@@ -1,5 +1,6 @@
 const city = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
+const loading = document.getElementById("loading");
 const errorDiv = document.getElementById("error");
 const errorMsg = document.getElementById("errorMessage");
 const weatherInfoDiv = document.getElementById("weatherInfo");
@@ -40,6 +41,7 @@ async function getWeather() {
   }
   errorMsg.textContent = "";
   city.value = "";
+  showLoading();
   const data = await fetchData(input);
   if (data) {
     displayWeatherData(data);
@@ -60,8 +62,23 @@ function displayWeatherData(data) {
   humidityDiv.textContent = `${data.current.humidity}%`;
   windSpeedDiv.textContent = `${data.current.wind_mph}mph`;
   pressureDiv.textContent = `${data.current.pressure_mb}mb`;
+
+  hideLoading();
 }
 
+function showLoading() {
+  loading.classList.add("show");
+  weatherInfoDiv.classList.remove("show");
+  error.classList.remove("show");
+  searchBtn.disabled = true;
+  searchBtn.textContent = "Searching...";
+}
+
+function hideLoading() {
+  loading.classList.remove("show");
+  searchBtn.disabled = false;
+  searchBtn.textContent = "Search";
+}
 // event Listeners
 searchBtn.addEventListener("click", (e) => {
   e.preventDefault();
