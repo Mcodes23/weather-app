@@ -20,7 +20,7 @@ async function fetchData(cityName) {
     const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}&aqi=no`;
     const response = await fetch(url);
     if (!response.ok) throw new Error("Network response was not ok");
-    data = await response.json();
+    const data = await response.json();
     errorDiv.classList.remove("show");
     return data;
   } catch (error) {
